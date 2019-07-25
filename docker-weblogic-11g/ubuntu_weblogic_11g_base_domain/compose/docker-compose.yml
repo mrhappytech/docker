@@ -1,0 +1,35 @@
+version: '3.5'
+
+services:
+  wlsadmin:
+    image: 'ubuntu_weblogic_11g_base_domain'
+    ports:
+      - '7001:7001'
+    networks:
+      - weblogic
+
+  managed1:
+    image: 'ubuntu_weblogic_11g_base_domain'
+    ports:
+      - '7101:7101'
+    environment:
+      - MS_NAME=managed1
+      - MS_PORT=7101
+    command: ["/user01/oracle/create-managed-server.sh"]
+    networks:
+      - weblogic
+
+  managed2:
+    image: 'ubuntu_weblogic_11g_base_domain'
+    ports:
+      - '7102:7102'
+    environment:
+      - MS_NAME=managed2
+      - MS_PORT=7102
+    command: ["/user01/oracle/create-managed-server.sh"]
+    networks:
+      - weblogic
+
+networks:
+  weblogic:
+    name: wlsadmin
